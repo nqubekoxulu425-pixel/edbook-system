@@ -9,7 +9,7 @@ function TeamsTab({ user }) {
   // 1. DYNAMIC SYSTEM LOAD DATABASE FETCH
   const fetchTeamsData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/teams');
+      const response = await fetch('https://edbook-system.onrender.com/api/teams');
       const data = await response.json();
       if (response.ok) {
         setTeams(data);
@@ -24,15 +24,15 @@ function TeamsTab({ user }) {
     // Helper check initialization: If database has zero teams, load two structural default teams
     const initDefaultTeams = async () => {
       try {
-        const check = await fetch('http://localhost:5000/api/teams');
+        const check = await fetch('https://edbook-system.onrender.com/api/teams');
         const existingData = await check.json();
         if (existingData.length === 0) {
-          await fetch('http://localhost:5000/api/teams/init', {
+          await fetch('https://edbook-system.onrender.com/api/teams/init', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ teamName: 'EdBook Core STEAM Team A', managerId: user.id })
           });
-          await fetch('http://localhost:5000/api/teams/init', {
+          await fetch('https://edbook-system.onrender.com/api/teams/init', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ teamName: 'EdBook Development Group B', managerId: user.id })
@@ -48,7 +48,7 @@ function TeamsTab({ user }) {
   const handleRequestJoin = async (teamId) => {
     setStatusMessage('');
     try {
-      const response = await fetch(`http://localhost:5000/api/teams/${teamId}/request-join`, {
+      const response = await fetch(`https://edbook-system.onrender.com/api/teams/${teamId}/request-join`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user.id })
@@ -64,7 +64,7 @@ function TeamsTab({ user }) {
   // 3. RESOLVE PENDING JOIN ACTION REQUEST (Manager Verification Control)
   const handleResolveRequest = async (teamId, targetUserId, approveBoolean) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/teams/${teamId}/handle-request`, {
+      const response = await fetch(`https://edbook-system.onrender.com/api/teams/${teamId}/handle-request`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: targetUserId, approve: approveBoolean })

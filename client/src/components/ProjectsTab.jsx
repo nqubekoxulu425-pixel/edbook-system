@@ -21,7 +21,7 @@ function ProjectsTab({ user }) {
   // 1. FETCH PROJECTS FROM DATABASE
   const fetchProjects = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/projects/search?name=${searchQuery}&sort=${sortMethod}`);
+      const response = await fetch(`https://edbook-system.onrender.com/api/projects/search?name=${searchQuery}&sort=${sortMethod}`);
       const data = await response.json();
       if (response.ok) setProjects(data);
     } catch (err) {
@@ -40,7 +40,7 @@ function ProjectsTab({ user }) {
     setFormMessage('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/projects/create', {
+      const response = await fetch('https://edbook-system.onrender.com/api/projects/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -69,7 +69,7 @@ function ProjectsTab({ user }) {
   const openProjectModal = async (project) => {
     setActiveProject(project);
     try {
-      await fetch(`http://localhost:5000/api/projects/${project._id}/log-interaction`, {
+      await fetch(`https://edbook-system.onrender.com/api/projects/${project._id}/log-interaction`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: user.name, action: 'opened' })
@@ -83,7 +83,7 @@ function ProjectsTab({ user }) {
   const closeProjectModal = async () => {
     if (!activeProject) return;
     try {
-      await fetch(`http://localhost:5000/api/projects/${activeProject._id}/log-interaction`, {
+      await fetch(`https://edbook-system.onrender.com/api/projects/${activeProject._id}/log-interaction`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: user.name, action: 'closed' })
@@ -101,7 +101,7 @@ function ProjectsTab({ user }) {
     if (!commentText.trim()) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/projects/${activeProject._id}/comment`, {
+      const response = await fetch(`https://edbook-system.onrender.com/api/projects/${activeProject._id}/comment`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: user.name, text: commentText })
